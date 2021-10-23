@@ -22,6 +22,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("org.hibernate:hibernate-validator:7.0.1.Final")
 	testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.5")
 	testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0")
 	testImplementation("org.springframework.security:spring-security-test:5.5.1")
