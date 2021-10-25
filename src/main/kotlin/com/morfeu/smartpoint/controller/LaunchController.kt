@@ -8,7 +8,9 @@ import com.morfeu.smartpoint.service.IEmployeeService
 import com.morfeu.smartpoint.service.ILaunchService
 import com.morfeu.smartpoint.util.ValidFieldUtil
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpStatus
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
@@ -65,5 +67,24 @@ class LaunchController(
         response.data = launchMapper.entityToDto(launch)
 
         return status(OK).body(response)
+    }
+
+    @GetMapping("/funcionario/{funcionarioId}")
+    fun listByEmployeeId(@PathVariable("funcionarioId") employeeId: String,
+                         @RequestParam(value = "page", defaultValue = "0") page: Int,
+                         @RequestParam(value = "order", defaultValue = "id") order: String,
+                         @RequestParam(value = "direction", defaultValue = "DES") direction: String): ResponseEntity<Response<Page<LaunchDto>>>  {
+
+        val response: Response<Page<LaunchDto>> = Response()
+
+        val pageRequest: PageRequest = PageRequest.of(page, paginationPage, Sort.Direction.valueOf(direction), order)
+
+        val launches: Page<Launch> = iLaunchService.findEmployeeById(employeeId, pageRequest)
+
+        val launchesDto: Page<LaunchDto> = launches.map { launch -> launchMapper.entityToDto(launch) }
+
+        response.data = launchesDto
+
+        return  status(OK).body(response)
     }
 }
