@@ -10,11 +10,13 @@ import com.morfeu.smartpoint.util.ValidFieldUtil
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.PageRequest.*
 import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Sort.*
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.ResponseEntity
-import org.springframework.http.ResponseEntity.status
+import org.springframework.http.ResponseEntity.*
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -40,7 +42,7 @@ class LaunchController(
 
         if (result.hasErrors()) {
             for (erro in result.allErrors) response.errors.add(erro.defaultMessage!!)
-            return ResponseEntity.badRequest().body(response)
+            return badRequest().body(response)
         }
 
         val launch: Launch = launchMapper.dtoToEntity(launchDto, result)
@@ -61,7 +63,7 @@ class LaunchController(
 
         if (launch == null) {
             response.errors.add("LANÇAMENTO NÃO ENCONTRADO PARA O ID $id")
-            return ResponseEntity.badRequest().body(response)
+            return badRequest().body(response)
         }
 
         response.data = launchMapper.entityToDto(launch)
@@ -77,7 +79,7 @@ class LaunchController(
 
         val response: Response<Page<LaunchDto>> = Response()
 
-        val pageRequest: PageRequest = PageRequest.of(page, paginationPage, Sort.Direction.valueOf(direction), order)
+        val pageRequest: PageRequest = of(page, paginationPage, Direction.valueOf(direction), order)
 
         val launches: Page<Launch> = iLaunchService.findEmployeeById(employeeId, pageRequest)
 
@@ -86,5 +88,39 @@ class LaunchController(
         response.data = launchesDto
 
         return  status(OK).body(response)
+    }
+
+    @PutMapping("/{id}")
+    fun update(@PathVariable("id") id: String, @Valid @RequestBody launchDto: LaunchDto, result: BindingResult): ResponseEntity<Response<LaunchDto>> {
+
+        val response: Response<LaunchDto> = Response()
+
+        validFieldUtil.employeeValid(launchDto, result)
+        launchDto.id = id
+        val launch: Launch = launchMapper.dtoToEntity(launchDto,result)
+
+        if (result.hasErrors()) {
+            for (erro in result.allErrors) response.errors.add(erro.defaultMessage!!)
+            return badRequest().body(response)
+        }
+
+        iLaunchService.persist(launch)
+        response.data = launchMapper.entityToDto(launch)
+        return ok(response)
+    }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable("id") id: String): ResponseEntity<Response<String>> {
+
+        val response: Response<String> = Response()
+        val launch: Launch? = iLaunchService.findById(id)
+
+        if (launch == null) {
+            response.errors.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
+            return badRequest().body(response)
+        }
+
+        iLaunchService.remove(id)
+        return ok(Response())
     }
 }
