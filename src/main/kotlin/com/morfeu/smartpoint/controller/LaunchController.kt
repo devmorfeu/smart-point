@@ -1,17 +1,16 @@
 package com.morfeu.smartpoint.controller
 
 import com.morfeu.smartpoint.controller.mapper.LaunchMapper
-import com.morfeu.smartpoint.dto.LaunchDto
+import com.morfeu.smartpoint.controller.dto.LaunchDto
 import com.morfeu.smartpoint.entity.Launch
 import com.morfeu.smartpoint.response.Response
 import com.morfeu.smartpoint.service.IEmployeeService
 import com.morfeu.smartpoint.service.ILaunchService
-import com.morfeu.smartpoint.util.ValidFieldUtil
+import com.morfeu.smartpoint.util.ValidatorUtil
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.PageRequest.*
-import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.*
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.OK
@@ -26,7 +25,7 @@ import javax.validation.Valid
 class LaunchController(
     val iLaunchService: ILaunchService,
     val employeeService: IEmployeeService,
-    val validFieldUtil: ValidFieldUtil,
+    val validatorUtil: ValidatorUtil,
     val launchMapper: LaunchMapper
 ) {
 
@@ -38,7 +37,7 @@ class LaunchController(
 
         val response: Response<LaunchDto> = Response()
 
-        validFieldUtil.employeeValid(launchDto, result)
+        validatorUtil.employeeValid(launchDto, result)
 
         if (result.hasErrors()) {
             for (erro in result.allErrors) response.errors.add(erro.defaultMessage!!)
@@ -95,7 +94,7 @@ class LaunchController(
 
         val response: Response<LaunchDto> = Response()
 
-        validFieldUtil.employeeValid(launchDto, result)
+        validatorUtil.employeeValid(launchDto, result)
         launchDto.id = id
         val launch: Launch = launchMapper.dtoToEntity(launchDto,result)
 

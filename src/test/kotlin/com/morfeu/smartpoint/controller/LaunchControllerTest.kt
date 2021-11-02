@@ -2,7 +2,7 @@ package com.morfeu.smartpoint.controller
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.morfeu.smartpoint.dto.LaunchDto
+import com.morfeu.smartpoint.controller.dto.LaunchDto
 import com.morfeu.smartpoint.entity.Employee
 import com.morfeu.smartpoint.entity.Launch
 import com.morfeu.smartpoint.enum.ProfileEnum

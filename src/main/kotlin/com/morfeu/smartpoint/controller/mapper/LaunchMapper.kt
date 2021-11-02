@@ -1,6 +1,6 @@
 package com.morfeu.smartpoint.controller.mapper
 
-import com.morfeu.smartpoint.dto.LaunchDto
+import com.morfeu.smartpoint.controller.dto.LaunchDto
 import com.morfeu.smartpoint.entity.Launch
 import com.morfeu.smartpoint.enum.TypeEnum
 import com.morfeu.smartpoint.service.ILaunchService

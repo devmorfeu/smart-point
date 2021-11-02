@@ -1,4 +1,4 @@
-package com.morfeu.smartpoint.dto
+package com.morfeu.smartpoint.controller.dto
 
 import javax.validation.constraints.NotEmpty
 
