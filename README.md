@@ -16,8 +16,9 @@ Aplicação back-end responsável por cadastrar batidas de pontos de funcionári
 
 ## Instalação
 
-* [x] abra o terminal e confirme a versão com o comando `kotlinc -version` (a versão 1.4.2 ou superior terá que estar instalada).
+* [x] abra o terminal e confirme a versão com o comando `kotlinc --version` (a versão 1.4.2 ou superior terá que estar instalada).
 * [x] abra o terminal e confirme a versão com o comando `java --version` (a versão 11 ou superior terá que estar instalada).
+* [x] abra o terminal e confirme a versão com o comando `mongo –-version` (a versão 5.0.3 ou superior terá que estar instalada).
 * [x] realize o download do [IntelliJ](https://www.jetbrains.com/pt-br/idea/download).
 * [x] baixe o projeto do GitHub com `git clone`.
 
@@ -28,5 +29,3 @@ Aplicação back-end responsável por cadastrar batidas de pontos de funcionári
 ## Projeto
 
 Pequeno DevOps (compilação, cobertura): *[Travis CI](https://app.travis-ci.com/github/devmorfeu/smart-point), [Codecov](https://app.codecov.io/gh/devmorfeu/smart-point)*.
-
-#### Testes Unitários TODO
